@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import "./globals.css";  // Make sure this is the only direct CSS import
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { ClerkProvider } from '@clerk/nextjs'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,12 +27,37 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+  
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen grid grid-rows-[auto_1fr_auto]`}
+        >
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </html>
+  
+    </ClerkProvider>
+
+   
   );
 }
+
+
+
+/*<ClerkProvider>
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen grid grid-rows-[auto_1fr-auto]`}
+      >
+      
+        <Header/>
+        {children}
+        <Footer/>
+   
+        
+      </body>
+    </html>
+    </ClerkProvider> /*need to wrap all my layout with clerk provider*/ 
